@@ -5,12 +5,31 @@ import java.awt.Graphics;
 public class Robot
 {
     private int centerX = 100;
-    private int center = 382;
+    private int centerY = 382;
     private boolean jumped = false;
 
     private int speedX = 0;
     private int speedY = 1;
 
+    public int getCenterx()
+    {
+        return centerX;
+    }
+
+    public int getCenter()
+    {
+        return centerY;
+    }
+
+    public int getSpeedx()
+    {
+        return speedX;
+    }
+    
+    public int getSpeedy()
+    {
+        return speedY;
+    }
     public void update()
     {
         if (speedX < 0)

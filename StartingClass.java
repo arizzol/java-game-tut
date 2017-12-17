@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.KeyListener;
 import java.awt.Graphics;
-
+import kiloboltgame.Robot;
 import java.awt.event.KeyEvent;
 
 public class StartingClass extends Applet implements Runnable, KeyListener
 {
     private Robot robot;
+    private Image image, character;
+    private URL base;
 
     @Override
     public void init()
@@ -21,6 +23,15 @@ public class StartingClass extends Applet implements Runnable, KeyListener
         addKeyListener(this);
         Frame frame = (Frame)this.getParent().getParent();
         frame.setTitle("Q-bot Alpha");
+        try
+        {
+            base = getDocumentBase();            
+        } catch (Exception e)
+        {
+            // TODO
+        }
+
+        character = getImage(base, "data/character.png");
     }
 
     @Override
@@ -66,6 +77,12 @@ public class StartingClass extends Applet implements Runnable, KeyListener
         paint(second);
 
         g.drawImage(image, 0, 0, this);
+    }
+
+    @Override
+    public void paint(Graphics g)
+    {
+        g.drawImage(character, robot.getCenterX()-61, robot.getCenterY()-63, this);
     }
 
     @Override
