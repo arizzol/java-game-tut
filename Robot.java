@@ -1,4 +1,4 @@
-package kiloboltgame;
+//package kiloboltgame;
 
 import java.awt.Graphics;
 
@@ -10,35 +10,45 @@ public class Robot
 
     private int speedX = 0;
     private int speedY = 1;
+    private int width = 20;
+    private int height = 10;
 
-    public int getCenterx()
+    public int getCenterX()
     {
         return centerX;
     }
 
-    public int getCenter()
+    public int getCenterY()
     {
         return centerY;
     }
 
-    public int getSpeedx()
+    public int getSpeedX()
     {
         return speedX;
     }
     
-    public int getSpeedy()
+    public int getSpeedY()
     {
         return speedY;
     }
+
+    public boolean getJumped()
+    {
+        return jumped;
+    }
+
+
+
     public void update()
     {
         if (speedX < 0)
         {
             centerX += speedX;
         }
-        else if (speed == 0)
+        else if (speedX == 0)
         {
-            System.out.println("do not scroll background");
+            //System.out.println("do not scroll background");
         }
         else
         {

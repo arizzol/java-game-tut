@@ -1,18 +1,21 @@
-package kiloboltgame;
+//package kiloboltgame;
 
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.KeyListener;
 import java.awt.Graphics;
-import kiloboltgame.Robot;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
 public class StartingClass extends Applet implements Runnable, KeyListener
 {
     private Robot robot;
-    private Image image, character;
+    private Image image, character, background;
+    private Graphics second;
     private URL base;
+    private static Background bg1, bg2;
 
     @Override
     public void init()
@@ -32,11 +35,15 @@ public class StartingClass extends Applet implements Runnable, KeyListener
         }
 
         character = getImage(base, "data/character.png");
+        background = getImage(base, "data/background.png");
     }
 
     @Override
     public void start()
     {
+        bg1 = new Background(0,0);
+        bg2 = new Background(2160, 0);
+        robot = new Robot();
         Thread thread = new Thread(this);
         thread.start();
     }
@@ -46,6 +53,9 @@ public class StartingClass extends Applet implements Runnable, KeyListener
     {
         while (true)
         {
+            robot.update();
+            bg1.update();
+            bg2.update();
             repaint();
             try
             {
@@ -82,6 +92,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener
     @Override
     public void paint(Graphics g)
     {
+
         g.drawImage(character, robot.getCenterX()-61, robot.getCenterY()-63, this);
     }
 
@@ -99,11 +110,11 @@ public class StartingClass extends Applet implements Runnable, KeyListener
             break;
 
             case KeyEvent.VK_LEFT:
-            System.out.println("left");
+            robot.moveLeft();
             break;
 
             case KeyEvent.VK_RIGHT:
-            System.out.println("right");
+            robot.moveRight();
             break;
 
             case KeyEvent.VK_SPACE:
@@ -124,9 +135,11 @@ public class StartingClass extends Applet implements Runnable, KeyListener
             break;
 
             case KeyEvent.VK_LEFT:
+                robot.stop();
             break;
 
             case KeyEvent.VK_RIGHT:
+                robot.stop();
             break;
         }
     }
