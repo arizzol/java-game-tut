@@ -4,9 +4,20 @@ import java.awt.Graphics;
 
 public class Robot
 {
+    // Constants
+    final int JUMPSPEED = -15;
+    final int MOVESPEED = 5;
+    final int GROUND = 382;
+
     private int centerX = 100;
-    private int centerY = 382;
+    private int centerY = GROUND;
     private boolean jumped = false;
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
+    private boolean ducked = false;
+
+    private static Background bg1 = StartingClass.getBg1();
+    private static Background bg2 = StartingClass.getBg2();
 
     private int speedX = 0;
     private int speedY = 1;
@@ -38,6 +49,30 @@ public class Robot
         return jumped;
     }
 
+    public void setCenterx(int centerX)
+    {
+        this.centerX = centerX;
+    }
+
+    public void setCentery(int centerY)
+    {
+        this.centerY = centerY;
+    }
+
+    public void setSpeedx(int speedX)
+    {
+        this.speedX = speedX;
+    }
+
+    public void setSpeedy(int speedY)
+    {
+        this.speedY = speedY;
+    }
+
+    public void setJumped(boolean jumped)
+    {
+        this.jumped = jumped;
+    }
 
 
     public void update()
@@ -46,9 +81,25 @@ public class Robot
         {
             centerX += speedX;
         }
-        else if (speedX == 0)
+        if (speedX == 0 || speedX < 0)
         {
-            //System.out.println("do not scroll background");
+            bg1.setSpeedX(0);
+            bg2.setSpeedX(0);
+        }
+        if (centerX <= 200 && speedX > 0)
+        {
+            centerX += speedX;
+        }
+        if (speedX > 0 && centerX > 200)
+        {
+            bg1.setSpeedX(-MOVESPEED);
+            bg2.setSpeedX(-MOVESPEED);
+        }
+
+        centerY += speedY;
+        if (centerY + speedY >= GROUND)
+        {
+            centerY = GROUND;
         }
         else
         {
@@ -76,9 +127,9 @@ public class Robot
         {
             speedY += 1;
 
-            if (centerY + speedY >= 382)
+            if (centerY + speedY >= GROUND)
             {
-                centerY = 382;
+                centerY = GROUND;
                 speedY = 0;
                 jumped = false;
             }
@@ -92,7 +143,10 @@ public class Robot
 
     public void moveRight()
     {
-        speedX = 6;
+        if (!ducked)
+        {
+            speedX = MOVESPEED;
+        }
     }
 
     public void moveLeft()
@@ -107,7 +161,7 @@ public class Robot
 
     public void jump()
     {
-        if (jumped == false)
+        //if (!jumped)
         {
             speedY -= 15;
             jumped = true;

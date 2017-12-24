@@ -12,7 +12,7 @@ import java.net.URL;
 public class StartingClass extends Applet implements Runnable, KeyListener
 {
     private Robot robot;
-    private Image image, character, background;
+    private Image image, currentSprite, character, background;
     private Graphics second;
     private URL base;
     private static Background bg1, bg2;
@@ -28,7 +28,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener
         frame.setTitle("Q-bot Alpha");
         try
         {
-            base = getDocumentBase();            
+            base = StartingClass.class.getResource("/");
         } catch (Exception e)
         {
             // TODO
@@ -106,6 +106,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener
             break;
 
             case KeyEvent.VK_DOWN:
+                currentSprite = characterDown;
             System.out.println("down");
             break;
 
@@ -118,6 +119,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener
             break;
 
             case KeyEvent.VK_SPACE:
+                robot.jump();
             System.out.println("jump");
             break;
         }
